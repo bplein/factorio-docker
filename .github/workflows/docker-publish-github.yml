@@ -69,11 +69,12 @@ jobs:
       - name: Extract all versions from buildinfo.json
         id: get-version
         run: |
-            VERSION=$(cat $GITHUB_WORKSPACE/buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
-            TAGS=$(cat $GITHUB_WORKSPACE/buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
-            echo "{VERSION}={$VERSION}" >> $GITHUB_ENV
-            echo "{TAGS}={$TAGS}" >> $GITHUB_ENV
-            echo $GITHUB_ENV
+            #VERSION=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
+            #TAGS=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
+            echo "{VERSION}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
+            echo "{TAGS}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
+            echo "$GITHUB_ENV"
+            echo "${{ env.VERSION }}"
       - name: Show versions and tags
         run: |
             echo "Version: ${{ env.VERSION }}"
