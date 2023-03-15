@@ -54,13 +54,13 @@ jobs:
         id: get-version
         run: |
           echo "action_state=yellow" >> $GITHUB_ENV
-#          echo "{VERSION}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
+          echo "{VERSION}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
 #          echo "{TAGS}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
 #          echo "$GITHUB_ENV"
 #          echo "${{ env.VERSION }}"
       - name: Show versions and tags
         run: |
           echo "${{ env.action_state }}" # This will output 'yellow'
-          #echo "Version: ${{ env.VERSION }}"
+          echo "${{ env.VERSION }}" # This will output VERSION
           #echo "Tags: ${{ env.TAGS }}"
           
