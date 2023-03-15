@@ -55,13 +55,10 @@ jobs:
         run: |
           VERSION=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          TAGS=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[]')
+          TAGS=$((<buildinfo.json jq -r '.[] | .tags | select( index("latest"))|.[]| @sh')| tr '\n' ' '| tr -d \')
           echo "TAGS=$TAGS" >> $GITHUB_ENV
-#          echo "$GITHUB_ENV"
-#          echo "${{ env.VERSION }}"
       - name: Show versions and tags
         run: |
           echo "${{ env.VERSION }}" # This will output VERSION
-          echo "${{ env.action_state }}" # This will output 'yellow'
           echo "Tags: ${{ env.TAGS }}"
           
