@@ -70,13 +70,14 @@ jobs:
         id: get-version
         run: |
             VERSION=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
-            tags=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
-      - name: Show versions
+            TAGS=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
+            echo "{VERSION}={$VERSION}" >> $GITHUB_OUTPUT
+            echo "{TAGS}={$TAGS}" >> $GITHUB_OUTPUT
+      - name: Show versions and tags
         run: |
-          tags="${{ steps.get-version.outputs.value }}"
-          for tag in $tags; do
-            echo "tag: $tag"
-          done
+            echo "Version: ${{ steps.get-version.outputs.VERSION }}
+            echo "Tags: ${{ steps.get-version.outputs.TAGS }}
+          
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
