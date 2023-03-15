@@ -66,6 +66,18 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Extract all versions from buildinfo.json
+        id: get-version
+        run: |
+            VERSION=$(jq -r '.[] | .tags | select( index("latest"))|.[0]' buildinfo.json)
+            tags=$(jq -r '.[] | .tags | select( index("latest"))|.[0]' buildinfo.json)
+      - name: Show versions
+        run: |
+          tags="${{ steps.get-version.outputs.value }}"
+          for tag in $tags; do
+            echo "tag: $tag"
+          done
+
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
@@ -74,7 +86,8 @@ jobs:
         with:
           context: ./docker/
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+#          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.get-version.outputs.value }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
