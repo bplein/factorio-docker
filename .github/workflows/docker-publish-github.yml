@@ -73,7 +73,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           TAGS=$((<buildinfo.json jq -r '.[] | .tags | select( index("latest"))|.[]| @sh')| tr '\n' ','| tr -d \'|sed 's/\(.*\),/\1 /')
           echo "TAGS=$TAGS" >> $GITHUB_ENV
-          SHA256=$(<buildinfo.json | jq -r '.$VERSION | .sha256')
+          SHA256=$(<buildinfo.json | jq -r --arg VERSION "$VERSION" '.$VERSION | .sha256')
           echo "SHA256=$SHA256" >> $GITHUB_ENV
           
       - name: Show versions and tags
