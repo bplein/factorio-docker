@@ -31,6 +31,7 @@ jobs:
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
 
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -52,14 +53,14 @@ jobs:
       - name: Extract all versions from buildinfo.json
         id: get-version
         run: |
-            #VERSION=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
-            #TAGS=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
-            echo "{VERSION}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
-            echo "{TAGS}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
-            echo "$GITHUB_ENV"
-            echo "${{ env.VERSION }}"
+          echo "action_state=yellow" >> $GITHUB_ENV
+#          echo "{VERSION}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
+#          echo "{TAGS}={$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')}" >> $GITHUB_ENV
+#          echo "$GITHUB_ENV"
+#          echo "${{ env.VERSION }}"
       - name: Show versions and tags
         run: |
-            echo "Version: ${{ env.VERSION }}"
-            echo "Tags: ${{ env.TAGS }}"
+          echo "${{ env.action_state }}" # This will output 'yellow'
+          #echo "Version: ${{ env.VERSION }}"
+          #echo "Tags: ${{ env.TAGS }}"
           
