@@ -69,8 +69,8 @@ jobs:
       - name: Extract all versions from buildinfo.json
         id: get-version
         run: |
-            VERSION=$(jq -r '.[] | .tags | select( index("latest"))|.[0]' buildinfo.json)
-            tags=$(jq -r '.[] | .tags | select( index("latest"))|.[0]' buildinfo.json)
+            VERSION=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
+            tags=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
       - name: Show versions
         run: |
           tags="${{ steps.get-version.outputs.value }}"
