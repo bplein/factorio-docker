@@ -69,14 +69,15 @@ jobs:
       - name: Extract all versions from buildinfo.json
         id: get-version
         run: |
-            VERSION=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
-            TAGS=$(cat buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
+            VERSION=$(cat /buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
+            TAGS=$(cat /buildinfo.json | jq -r '.[] | .tags | select( index("latest"))|.[0]')
             echo "{VERSION}={$VERSION}" >> $GITHUB_OUTPUT
             echo "{TAGS}={$TAGS}" >> $GITHUB_OUTPUT
+            echo $GITHUB_OUTPUT
       - name: Show versions and tags
         run: |
-            echo "Version: ${{ steps.get-version.outputs.VERSION }}
-            echo "Tags: ${{ steps.get-version.outputs.TAGS }}
+            echo "Version: ${{ steps.get-version.outputs.VERSION }}"
+            echo "Tags: ${{ steps.get-version.outputs.TAGS }}"
           
 
       # Build and push Docker image with Buildx (don't push on PR)
