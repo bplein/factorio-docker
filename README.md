@@ -3,6 +3,7 @@
 [中文](./README_zh_CN.md)
 
 <!-- start autogeneration tags -->
+* `1.1.98`, `1`, `1.1`, `latest`
 <!-- end autogeneration tags -->
 
 ## Tag descriptions
