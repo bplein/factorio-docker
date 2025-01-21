@@ -4,7 +4,7 @@
 
 <!-- start autogeneration tags -->
 * `2.0.32`, `2`, `2.0`, `latest`
-* `2.0.28`, `stable`
+* `2.0.30`, `stable`
 * `1.1.110`, `1`, `1.1`
 <!-- end autogeneration tags -->
 
